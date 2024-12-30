@@ -22,7 +22,7 @@ const formSchema = z.object({
 
 import React, { useState } from 'react'
 import Link from "next/link"
-import { createAccount } from "@/lib/actions/user.action"
+import { createAccount, signInUser } from "@/lib/actions/user.action"
 import OtpModal from "@/components/OTPModal"
 
 type FormType = "sign-in" | "sign-up";
@@ -57,10 +57,13 @@ const AuthForm = ({ type } : { type: FormType }) => {
         setErrorMessage("");
 
         try {
-            const user = await createAccount({
-                fullName: values.fullName || "",
-                email: values.email,
-            });
+            const user = 
+                type === 'sign-up' 
+                    ? await createAccount({
+                        fullName: values.fullName || "",
+                        email: values.email 
+                    })
+                    : await signInUser( { email: values.email } )
             setAccountId(user.accountId);
         } catch {
             setErrorMessage("Failed to create acunt. Please try again");
@@ -157,7 +160,7 @@ const AuthForm = ({ type } : { type: FormType }) => {
         </Form>
 
         {accountId && (
-            <OtpModal email={form.getValues("email")} accountId={accountId} />
+            <OtpModal accountId={accountId} email={form.getValues("email")} />
         )}
         {/*OTP Verification*/}
       </>
