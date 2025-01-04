@@ -116,7 +116,7 @@ export const getCurrentUser = async () => {
     } catch (error) {
       console.log(error);
     }
-};
+  };
 
 export const signOutUser = async () => {
     const { account } = await createSessionClient();
