@@ -21,10 +21,10 @@ import { sendEmailOTP, verifySecret } from "@/lib/actions/user.action";
 import { useRouter } from "next/navigation";
 
 
-const OtpModal = ({accountId, email}) : {
+const OtpModal = ({accountId, email} : {
     accountId: string;
     email: string;
-} => { 
+}) => { 
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(true);
     const [password, setPassword] = useState('');
